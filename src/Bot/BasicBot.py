@@ -4,11 +4,11 @@ from gpiozero import LED, PWMLED, Buzzer, Motor
 import string
 import serial
 import socket
-
 from gpiozero.pins.pigpio import PiGPIOFactory
 
-# os.environ["PIGPIO_ADDR"] = "10.0.0.160"
-# os.environ["GPIOZERO_PIN_FACTORY"] = "pigpio"
+bot_ip_address = '10.0.0.195'
+os.environ["PIGPIO_ADDR"] = bot_ip_address
+os.environ["GPIOZERO_PIN_FACTORY"] = "pigpio"
 
 # Definition of  key value
 class BasicBot:
