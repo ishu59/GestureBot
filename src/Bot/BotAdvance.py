@@ -1,7 +1,7 @@
 from Bot import BasicBot
 
 class BotAdvance(BasicBot):
-
+    pass
     # Motor pins are initialized into output mode
     # Key pin is initialized into input mode
     # Ultrasonic pin,RGB pin,servo pin initialization
