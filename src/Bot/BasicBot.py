@@ -27,14 +27,22 @@ class BasicBot:
         self.IN4 = 26
         self.ENA = 16
         self.ENB = 13
-        self.CarSpeedControl = 0.1
+        self.CarSpeedControl = 0.2
 
         # Definition of buzzer pin
         self.buzzer_pin = 8
-        self.motor_a: Motor = Motor(forward=self.IN1, backward=self.IN2, enable=self.ENA, pin_factory=self.factory)
-        self.motor_b: Motor = Motor(forward=self.IN3, backward=self.IN4, enable=self.ENB, pin_factory=self.factory)
-        self.buzzer: Buzzer = Buzzer(pin=self.buzzer_pin, pin_factory=self.factory)
-        self.buzzer.blink(on_time= 0.5, off_time=0.5 ,n=1)
+        if self.factory is not None:
+            self.motor_a: Motor = Motor(forward=self.IN1, backward=self.IN2, enable=self.ENA, pwm=True, pin_factory=self.factory)
+            self.motor_b: Motor = Motor(forward=self.IN3, backward=self.IN4, enable=self.ENB, pwm=True, pin_factory=self.factory)
+            # self.buzzer: Buzzer = Buzzer(pin=self.buzzer_pin, pin_factory=self.factory)
+            # self.buzzer.blink(on_time= 0.5, off_time=0.5 ,n=1)
+            # self.buzzer.off()
+        else:
+            self.motor_a: Motor = Motor(forward=self.IN1, backward=self.IN2, enable=self.ENA, pwm=True)
+            self.motor_b: Motor = Motor(forward=self.IN3, backward=self.IN4, enable=self.ENB, pwm=True)
+            # self.buzzer: Buzzer = Buzzer(pin=self.buzzer_pin)
+            #self.buzzer.blink(on_time=0.5, off_time=0.5, n=1)
+
 
     #     self.test_led_pin = 18
     #     self.test_led = LED(pin=self.test_led_pin, pin_factory=self.factory)
@@ -51,33 +59,33 @@ class BasicBot:
 
     # Advance
     def run(self):
-        self.motor_a.forward()
-        self.motor_b.forward()
+        self.motor_a.forward(self.CarSpeedControl)
+        self.motor_b.forward(self.CarSpeedControl)
 
     # back
     def back(self):
-        self.motor_a.backward()
-        self.motor_b.backward()
+        self.motor_a.backward(self.CarSpeedControl)
+        self.motor_b.backward(self.CarSpeedControl)
 
     # trun left
     def left(self):
         self.motor_a.stop()
-        self.motor_b.forward()
+        self.motor_b.forward(self.CarSpeedControl)
 
     # turn right
     def right(self):
-        self.motor_a.forward()
+        self.motor_a.forward(self.CarSpeedControl)
         self.motor_b.stop()
 
     # turn left in place
     def spin_left(self):
-        self.motor_a.backward()
-        self.motor_b.forward()
+        self.motor_a.backward(self.CarSpeedControl)
+        self.motor_b.forward(self.CarSpeedControl)
 
     # turn right in place
     def spin_right(self):
-        self.motor_a.forward()
-        self.motor_b.backward()
+        self.motor_a.forward(self.CarSpeedControl)
+        self.motor_b.backward(self.CarSpeedControl)
 
     # brake
     def brake(self):
@@ -86,8 +94,5 @@ class BasicBot:
 
     # whistle
     def whistle(self):
-        self.buzzer.blink(on_time= 0.5, off_time=0.5 ,n=1)
-        # GPIO.output(buzzer, GPIO.LOW)
-        # time.sleep(0.1)
-        # GPIO.output(buzzer, GPIO.HIGH)
-        # time.sleep(0.001)
+        pass
+        # self.buzzer.blink(on_time= 0.5, off_time=0.5 ,n=1)

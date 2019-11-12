@@ -10,6 +10,7 @@ os.environ["GPIOZERO_PIN_FACTORY"] = "pigpio"
 
 bot = BasicBot(host=bot_ip_address)
 def on_press(key):
+
     print('{0} pressed'.format(key))
     if key == 'w' or key == Key.up:
         bot.run()
@@ -20,12 +21,8 @@ def on_press(key):
     elif key == 'd' or key == Key.right:
         bot.right()
     elif key == 'e' or key == Key.space:
-        # print('Led start')
-        # bot.start_test_led()
         bot.whistle()
     else:
-        # print('Led start')
-        # bot.start_test_led()
         bot.brake()
 
 def on_release(key):
